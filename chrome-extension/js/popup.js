@@ -17,7 +17,6 @@ document.getElementById('seo-check-trigger').addEventListener('click', () => {
       target: { tabId: activeTab },
       function: checkSEOTags
     }, (results) => {
-      console.log("results", results)
       // Display results after getting them from the page
       if (results && results[0].result && results[0].result?.requiredResultInfo && results[0].result?.requiredResultCount && results[0].result?.optionalResultInfo && results[0].result?.optionalResultCount) {
         const analysisData = {
@@ -101,7 +100,6 @@ function checkSEOTags() {
     }
   }
 
-  console.log("proc data", requiredResults, requiredResultCount, optionalResults, optionalResultCount);
   return { requiredResultInfo: requiredResults, requiredResultCount, optionalResultInfo: optionalResults, optionalResultCount };
 }
 
@@ -147,8 +145,6 @@ function displayResults(data) {
   optionalAnalysisScore = Math.round(optionalAnalysisScore);
 
   totalAnalysisScore = requiredAnalysisScore + optionalAnalysisScore;
-
-  console.log("analysis scores", requiredAnalysisScore, optionalAnalysisScore)
 
   renderSEOResults(totalAnalysisScore);
 }
@@ -202,7 +198,7 @@ function saveResultsToStorage(processedData) {
 
       // Save the updated data back to storage
       chrome.storage.local.set({ seoData }, () => {
-        console.log('SEO results and tab URL saved.');
+        // console.log('SEO results and tab URL saved.');
       });
     });
   });
@@ -229,7 +225,7 @@ function loadResultsFromStorage() {
         loadWithTransition(false);
         displayResults(savedAnalysisData);
       } else {
-        console.log("No SEO results found for this tab in storage.");
+        // console.log("No SEO results found for this tab in storage.");
       }
     });
   });
