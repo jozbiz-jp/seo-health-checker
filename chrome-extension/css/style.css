@@ -1,0 +1,200 @@
+body {
+    padding: 10px;
+    min-width: 300px;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-list .btn .material-icons {
+    max-width: 20px;
+    overflow: hidden;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.btn-list .btn {
+    text-transform: capitalize;
+    font-size: 11px;
+    height: 30px;
+    line-height: 12px;
+    margin: 0;
+    padding: 0 12px;
+    font-family: "Nunito", sans-serif;
+}
+
+
+/* Extension heading with info */
+.copied-list-brand {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.copied-list-brand-logo {
+    width: 24px;
+    height: 24px;
+    margin: auto 0;
+}
+
+.copied-list-brand-heading {
+    font-size: 16px;
+    font-weight: 800;
+    margin: auto 6px auto 8px;
+}
+
+.copied-list-brand-info {
+    margin: auto 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.copied-list-brand-info-icon.material-icons {
+    margin: auto 0;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+/* Analysis heading with table */
+#seo-check-trigger {
+    background-color: #2d75ff;
+}
+
+.seo-health-loading.progress {
+    margin-top: 16px;
+    background-color: #b6d0ff;
+}
+.seo-health-loading .indeterminate {
+    background-color: #5a68ff;
+}
+
+.seo-health-results {
+    /* border-top: 5px solid #e4e4e4; */
+    margin-top: 16px;
+    padding-top: 8px;
+}
+.seo-health-results .circle,
+.seo-health-results .circle svg {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+.seo-health-results .circle {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+  text-align: center;
+}
+.seo-health-results .circle svg circle {
+  width: 100px;
+  height: 100px;
+  fill: none;
+  stroke-width: 6;
+  stroke: #000;
+  transform: translate(5px, 5px);
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+}
+.seo-health-results .circle svg circle:nth-child(1) {
+  stroke-dashoffset: 0;
+  stroke: #f3f3f3;
+}
+.seo-health-results .circle svg circle:nth-child(2) {
+  stroke-linecap: round;
+  stroke: linear-gradient(180deg, #2dcce2 0%, #0074e0 100%);
+  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.25);
+  transform: rotate(-90deg) translate(5px, 5px);
+  transform-origin: 50% 50%;
+}
+.seo-health-results .circle .number {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  background-color: #0074e0;
+  background-size: 100%;
+  background-repeat: repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+.seo-health-results .blue-grad-text {
+  background-image: linear-gradient(45deg, #2dcce2 0%, #0074e0 100%);
+}
+.seo-health-results .red-grad-text {
+  background-image: linear-gradient(45deg, #f11111 0%, #dc00e0 100%);
+}
+.seo-health-results .green-grad-text {
+  background-image: linear-gradient(45deg, #51e22d 0%, #00e08f 100%);
+}
+.seo-health-results ::selection {
+  color: black;
+  background-color: #f3f3f3;
+}
+.seo-health-results .score-subtitle {
+  font-weight: 800;
+  color: #999999;
+  font-size: 12px;
+}
+
+/* analysis breakdown */
+.seo-health-details-heading {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    color: #000;
+}
+.seo-health-details-subheading {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 2px;
+    text-decoration: underline;
+    color: #000;
+}
+.seo-health-details-content {
+    margin: 0;
+    padding-bottom: 8px;
+}
+.seo-health-details-content, .seo-health-details-content li {
+    font-size: 12px;
+    color: #4f4f4f;
+    margin-left: 8px;
+}
+.seo-health-details-content li.txt-error {
+    color: #d50000;
+    list-style: circle !important;
+}
+.seo-health-details-content li.txt-success {
+    color: #007b31;
+    list-style: disc !important;
+}

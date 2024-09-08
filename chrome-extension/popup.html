@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Health Checker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="copied-list-brand">
+        <img class="copied-list-brand-logo" src="icons/icon-128.png" alt="Browser copy logo" />
+        <h3 class="copied-list-brand-heading">SEO Health Checker</h3>
+        <a href="https://github.com/jozbiz-jp/browser-copy-assistant" target="_blank" class="copied-list-brand-info">
+            <i class="material-icons right copied-list-brand-info-icon">info_outline</i>
+        </a>
+    </div>
+    <div id="copied-list-top-btns" class="btn-list">
+        <button id="seo-check-trigger" class="btn waves-effect waves-light" name="action">
+            Run Analysis
+            <i class="material-icons right">refresh</i>
+        </button>
+    </div>
+
+
+
+    <!-- Copied list empty -->
+    <!-- <div id="copied-list-empty" class="copied-list-empty">
+        <img src="icons/emptybox.png" alt="empty list" />
+        <h2 class="copied-list-empty-heading">No text copied yet.</h2>
+    </div> -->
+
+    <div id="seo-health-loading" class="progress seo-health-loading" style="display: none;">
+        <div class="indeterminate"></div>
+    </div>
+
+    <div id="seo-health-results" class="seo-health-results" style="display: none;">
+        <!-- Score bar -->
+        <div class="circle">
+            <svg width="100px" height="100px">
+                <circle cx="45" cy="45" r="45"></circle>
+                <circle id="circle-stroke" cx="45" cy="45" r="45"></circle>
+                <defs>
+                    <linearGradient id="bluegrad">
+                        <stop id="stop1" offset="0%" stop-color="#2DCCE2" />
+                        <stop id="stop2" offset="100%" stop-color="#0074E0" />
+                    </linearGradient>
+                    <linearGradient id="greengrad">
+                        <stop id="stop1" offset="0%" stop-color="#51E22D" />
+                        <stop id="stop2" offset="100%" stop-color="#00E08F" />
+                    </linearGradient>
+                    <linearGradient id="redgrad">
+                        <stop id="stop1" offset="0%" stop-color="#F11111" />
+                        <stop id="stop2" offset="100%" stop-color="#DC00E0" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="number"></div>
+            <div class="score-subtitle text-muted">SEO score</div>
+        </div>
+
+        <!-- score details wrapper -->
+        <div class="seo-health-details">
+            <div class="seo-health-details-heading">Analysis Breakdown</div>
+            <div class="seo-health-details-subheading">Must-have tags</div>
+            <ul id="seo-required-results" class="seo-health-details-content"></ul>
+            <div class="seo-health-details-subheading">Good-to-have tags</div>
+            <ul id="seo-optional-results" class="seo-health-details-content"></ul>
+        </div>
+    </div>
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/popup.js"></script>
+</body>
+
+</html>
