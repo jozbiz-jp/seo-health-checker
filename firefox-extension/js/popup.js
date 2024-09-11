@@ -8,23 +8,21 @@ const totalOptionalMetricsCount = 20;
 const requiredMetricWeight = 15; // 90/6
 const optionalMetricWeight = 0.5; // 10/20
 
-
 document.getElementById('seo-check-trigger').addEventListener('click', () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
     const activeTab = tabs[0].id;
 
-    chrome.scripting.executeScript({
-      target: { tabId: activeTab },
-      function: checkSEOTags
-    }, (results) => {
+    browser.tabs.executeScript(activeTab, {
+      code: `(${checkSEOTags})()`
+    }).then((results) => {
       // Display results after getting them from the page
-      if (results && results[0].result && results[0].result?.requiredResultInfo && results[0].result?.requiredResultCount && results[0].result?.optionalResultInfo && results[0].result?.optionalResultCount) {
+      if (results && results[0] && results[0].requiredResultInfo && results[0].requiredResultCount && results[0].optionalResultInfo && results[0].optionalResultCount) {
         const analysisData = {
-          requiredInfo: results[0].result.requiredResultInfo,
-          requiredCount: results[0].result.requiredResultCount,
-          optionalInfo: results[0].result.optionalResultInfo,
-          optionalCount: results[0].result.optionalResultCount,
-        }
+          requiredInfo: results[0].requiredResultInfo,
+          requiredCount: results[0].requiredResultCount,
+          optionalInfo: results[0].optionalResultInfo,
+          optionalCount: results[0].optionalResultCount,
+        };
         loadWithTransition(true);
         displayResults(analysisData);
         saveResultsToStorage(analysisData);
@@ -32,7 +30,6 @@ document.getElementById('seo-check-trigger').addEventListener('click', () => {
     });
   });
 });
-
 
 function loadWithTransition(flag) {
   document.getElementById('seo-health-loading').style.display = flag ? "block" : "none";
@@ -49,35 +46,35 @@ function checkSEOTags() {
   let requiredResultCount = 0;
   let optionalResultCount = 0;
   const requiredMetaTags = {
-    charset: document.querySelector('meta[charset]')?.content, // Ensures proper encoding
-    title: document.title, // Page title, critical for SEO
-    description: document.querySelector('meta[name="description"]')?.content, // SEO meta description
-    keywords: document.querySelector('meta[name="keywords"]')?.content, // Optional but used for keywords
-    robots: document.querySelector('meta[name="robots"]')?.content, // Tells search engines whether to index
-    language: document.querySelector('meta[name="language"]')?.content, // Language tag (not as critical but recommended)
+    charset: document.querySelector('meta[charset]')?.content,
+    title: document.title,
+    description: document.querySelector('meta[name="description"]')?.content,
+    keywords: document.querySelector('meta[name="keywords"]')?.content,
+    robots: document.querySelector('meta[name="robots"]')?.content,
+    language: document.querySelector('meta[name="language"]')?.content,
   };
 
   const optionalMetaTags = {
-    subject: document.querySelector('meta[name="subject"]')?.content, // Subject of the website
-    copyright: document.querySelector('meta[name="copyright"]')?.content, // Copyright information
-    author: document.querySelector('meta[name="author"]')?.content, // Author's name or company
-    ogTitle: document.querySelector('meta[property="og:title"]')?.content, // OpenGraph title (for social sharing)
-    ogDescription: document.querySelector('meta[property="og:description"]')?.content, // OpenGraph description (for social sharing)
-    ogImage: document.querySelector('meta[property="og:image"]')?.content, // OpenGraph image (for social sharing)
-    ogUrl: document.querySelector('meta[property="og:url"]')?.content, // OpenGraph URL
-    ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content, // Site name for OpenGraph
-    twitterCard: document.querySelector('meta[name="twitter:card"]')?.content, // Twitter card meta tag
-    twitterTitle: document.querySelector('meta[name="twitter:title"]')?.content, // Twitter title
-    twitterDescription: document.querySelector('meta[name="twitter:description"]')?.content, // Twitter description
-    revisitAfter: document.querySelector('meta[name="revisit-after"]')?.content, // How often a page is revisited
-    rating: document.querySelector('meta[name="rating"]')?.content, // Content rating
-    distribution: document.querySelector('meta[name="distribution"]')?.content, // Distribution scope (global)
-    mobileOptimized: document.querySelector('meta[name="MobileOptimized"]')?.content, // Mobile optimization meta tag
-    viewport: document.querySelector('meta[name="viewport"]')?.content, // Viewport settings for responsiveness
-    appleMobileWebAppCapable: document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content, // iOS capability
-    appleMobileWebAppStatusBarStyle: document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.content, // iOS status bar styling
-    canonical: document.querySelector('link[rel="canonical"]')?.href, // Canonical URL, important for duplicate content
-    hreflang: document.querySelector('link[rel="alternate"][hreflang]')?.href // For international/multilingual SEO
+    subject: document.querySelector('meta[name="subject"]')?.content,
+    copyright: document.querySelector('meta[name="copyright"]')?.content,
+    author: document.querySelector('meta[name="author"]')?.content,
+    ogTitle: document.querySelector('meta[property="og:title"]')?.content,
+    ogDescription: document.querySelector('meta[property="og:description"]')?.content,
+    ogImage: document.querySelector('meta[property="og:image"]')?.content,
+    ogUrl: document.querySelector('meta[property="og:url"]')?.content,
+    ogSiteName: document.querySelector('meta[property="og:site_name"]')?.content,
+    twitterCard: document.querySelector('meta[name="twitter:card"]')?.content,
+    twitterTitle: document.querySelector('meta[name="twitter:title"]')?.content,
+    twitterDescription: document.querySelector('meta[name="twitter:description"]')?.content,
+    revisitAfter: document.querySelector('meta[name="revisit-after"]')?.content,
+    rating: document.querySelector('meta[name="rating"]')?.content,
+    distribution: document.querySelector('meta[name="distribution"]')?.content,
+    mobileOptimized: document.querySelector('meta[name="MobileOptimized"]')?.content,
+    viewport: document.querySelector('meta[name="viewport"]')?.content,
+    appleMobileWebAppCapable: document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content,
+    appleMobileWebAppStatusBarStyle: document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]')?.content,
+    canonical: document.querySelector('link[rel="canonical"]')?.href,
+    hreflang: document.querySelector('link[rel="alternate"][hreflang]')?.href
   };
 
   // Required meta tags check
@@ -109,10 +106,6 @@ function displayResults(data) {
   requiredResultsList.innerHTML = ''; // Clear any previous results
   const optionalResultsList = document.getElementById('seo-optional-results');
   optionalResultsList.innerHTML = ''; // Clear any previous results
-
-  // const listItem = document.createElement('li');
-  // listItem.textContent = JSON.stringify(data);
-  // requiredResultsList.appendChild(listItem);
 
   // Display required data analysis
   if (data?.requiredInfo?.length > 0) {
@@ -151,14 +144,11 @@ function displayResults(data) {
 
 function renderSEOResults(resCount) {
   let color = "blue";
-  // Assuming the radius of the circle is 85 (adjust based on your actual circle's radius)
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
 
-  // Calculate the score as a percentage (resCount is divided by totalMetrics)
   const score = resCount && resCount > 0 ? parseInt((resCount / 100) * 100) : 0;
 
-  // Calculate the stroke-dashoffset based on the score
   const offset = circumference - (circumference * score / 100);
   if (score >= 75) {
     color = "green";
@@ -184,13 +174,13 @@ function renderSEOResults(resCount) {
   );
 }
 
-// Save results to chrome.storage.local
+// Save results to browser.storage.local
 function saveResultsToStorage(processedData) {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const tabURL = new URL(tabs[0].url).host;  // Get active tab URL
+  browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+    const tabURL = new URL(tabs[0].url).host;
 
     // Get existing data first
-    chrome.storage.local.get('seoData', (data) => {
+    browser.storage.local.get('seoData').then((data) => {
       const seoData = data.seoData || {};
 
       // Add or update the current URL's SEO result
@@ -199,25 +189,22 @@ function saveResultsToStorage(processedData) {
       // Limit the number of URLs to 100
       const keys = Object.keys(seoData);
       if (keys.length > 100) {
-        // Remove the oldest entry (the first one in the object)
-        delete seoData[keys[0]];
+        delete seoData[keys[0]]; // Remove the oldest entry
       }
 
       // Save the updated data back to storage
-      chrome.storage.local.set({ seoData }, () => {
-        // console.log('SEO results and tab URL saved.');
-      });
+      browser.storage.local.set({ seoData });
     });
   });
 }
 
-// Load saved results from chrome.storage.local
+// Load saved results from browser.storage.local
 function loadResultsFromStorage() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const activeTabURL = new URL(tabs[0].url).host;  // Get active tab URL
+  browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+    const activeTabURL = new URL(tabs[0].url).host;
 
     // Get the stored data
-    chrome.storage.local.get('seoData', (data) => {
+    browser.storage.local.get('seoData').then((data) => {
       const seoData = data.seoData || {};
       const seoResultsForTab = seoData[activeTabURL];
 
@@ -228,11 +215,9 @@ function loadResultsFromStorage() {
           requiredCount: seoResultsForTab.requiredCount,
           optionalInfo: seoResultsForTab.optionalInfo,
           optionalCount: seoResultsForTab.optionalCount,
-        }
+        };
         loadWithTransition(false);
         displayResults(savedAnalysisData);
-      } else {
-        // console.log("No SEO results found for this tab in storage.");
       }
     });
   });
