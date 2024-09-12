@@ -2,6 +2,11 @@
 
 SEO Health Checker is a browser extension designed to analyze the SEO-related meta tags of any webpage. It highlights critical SEO tags and optional tags for social sharing, helping web developers and SEO professionals ensure the presence and correctness of essential meta information.
 
+# Extension Links:
+[Chrome Extension](https://chromewebstore.google.com/detail/seo-health-checker/dlebdpdkfegojclikbaangielkafnhag)
+<br/>
+[Firefox Extension](https://addons.mozilla.org/en-GB/firefox/addon/seo-health-checker/)
+
 ## Table of Contents
 
 1. [Overview](#overview)
